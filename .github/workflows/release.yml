@@ -81,5 +81,7 @@ jobs:
         context: .
         file: ./docker/github/Dockerfile
         push: true
-        build-args: "APP_NAME=${{ env.AUTHAPP_ARTEFACT }},VERSION=${{ env.VERSION }}"
+        build-args: |
+              APP_NAME=${{ env.AUTHAPP_ARTEFACT }}
+              VERSION=${{ env.VERSION }}
         tags: thelastimperial/authapp:${{ env.VERSION }}
