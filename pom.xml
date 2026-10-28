@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.thelastimperial.auth</groupId>
 	<artifactId>authapp</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2</version>
 	<name/>
 	<description/>
 	<url/>
@@ -30,6 +30,7 @@
 		<java.version>21</java.version>
 		<auth.version>1.4.0</auth.version>
 		<com.thelastimperial.utils.version>0.0.6</com.thelastimperial.utils.version>
+		<maven.deploy.skip>true</maven.deploy.skip>
 	</properties>
 	<repositories>
 		<repository>
