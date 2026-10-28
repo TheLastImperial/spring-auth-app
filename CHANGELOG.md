@@ -1,7 +1,7 @@
 # Auth App
 
-Version 0.0.2
+Version 0.0.3
 
 ## Comments
 
-Deleted `mvn deploy` of GitHub Action.
+Added `-DskipTests` on GitHub Action.
