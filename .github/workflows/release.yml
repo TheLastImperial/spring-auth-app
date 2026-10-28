@@ -1,0 +1,85 @@
+
+name: Java CI with Maven
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+    - uses: actions/checkout@v7
+    - name: Set up JDK 21
+      uses: actions/setup-java@v6
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: maven
+        server-id: github
+        server-username-env-var: GITHUB_ACTOR
+        server-password-env-var: GITHUB_TOKEN
+    - name: Build with Maven
+      run: mvn -B clean package deploy -DskipTests
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Get Project version
+      id: get_version
+      run: |
+        VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+        echo "Version: $VERSION"
+
+    - name: Get AuthApp ArtefactId
+      id: get_authapp_artefact_id
+      run: |
+        AUTHAPP_ARTEFACT=$(mvn -f pom.xml help:evaluate -Dexpression=project.artifactId -q -DforceStdout)
+        echo "AUTHAPP_ARTEFACT=$AUTHAPP_ARTEFACT" >> $GITHUB_ENV
+        echo "AuthApp ID: $AUTHAPP_ARTEFACT"
+
+    - name: Create notes for release from commits.
+      id: release_notes
+      run: |
+        echo "Reading CHANGELOG.md..."
+        CHANGELOG=$(cat CHANGELOG.md)
+
+        # Save messages in multiline variable.
+        EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+        echo "CHANGELOG<<$EOF" >> $GITHUB_ENV
+        echo "$CHANGELOG" >> $GITHUB_ENV
+        echo "$EOF" >> $GITHUB_ENV
+
+    - name: create Tag and Release on GitHub
+      uses: softprops/action-gh-release@v3
+      with:
+        tag_name: "v${{ env.VERSION }}"
+        name: "Release v${{ env.VERSION }}"
+        body: |
+          ${{ env.CHANGELOG }}
+        draft: false
+        prerelease: false
+        files: |
+            target/${{ env.AUTHAPP_ARTEFACT }}-${{ env.VERSION }}.jar
+
+    - name: Log in to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v7
+      with:
+        context: .
+        file: ./docker/github/Dockerfile
+        push: true
+        build-args: "APP_NAME=${{ env.AUTHAPP_ARTEFACT }},VERSION=${{ env.VERSION }}"
+        tags: thelastimperial/authapp:${{ env.VERSION }}
