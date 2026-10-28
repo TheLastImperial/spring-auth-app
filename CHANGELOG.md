@@ -1,7 +1,7 @@
 # Auth App
 
-Version 0.0.1
+Version 0.0.2
 
 ## Comments
 
-Version to deploy with GitHub Action and create Docker Image.
+Deleted `mvn deploy` of GitHub Action.
