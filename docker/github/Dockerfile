@@ -1,7 +1,7 @@
 ARG APP_NAME=authapp
 ARG VERSION=latest
 
-FROM eclipse-temurin:21-jre-focal AS deploy
+FROM eclipse-temurin:21-jre-resolute AS deploy
 
 COPY ./target/${APP_NAME}-${VERSION}.jar app.jar
 
