@@ -1,7 +1,7 @@
 # Auth App
 
-Version 0.0.3
+Version 0.0.4
 
 ## Comments
 
-Added `-DskipTests` on GitHub Action.
+Updated Docker base image to build the custom image.
