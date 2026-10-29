@@ -1,7 +1,7 @@
 # Auth App
 
-Version 0.0.10
+Version 0.0.11
 
 ## Comments
 
-Added ghcr.io prefix.
+Added support to google cloud sql.
