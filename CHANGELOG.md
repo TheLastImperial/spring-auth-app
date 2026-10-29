@@ -1,7 +1,7 @@
 # Auth App
 
-Version 0.0.9
+Version 0.0.10
 
 ## Comments
 
-Rename docker image.
+Added ghcr.io prefix.
