@@ -84,4 +84,4 @@ jobs:
         build-args: |
               APP_NAME=${{ env.AUTHAPP_ARTEFACT }}
               VERSION=${{ env.VERSION }}
-        tags: thelastimperial/authapp:${{ env.VERSION }}
+        tags: thelastimperial/spring-auth-app:${{ env.VERSION }}

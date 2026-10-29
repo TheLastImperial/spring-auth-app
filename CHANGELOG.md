@@ -1,7 +1,7 @@
 # Auth App
 
-Version 0.0.8
+Version 0.0.9
 
 ## Comments
 
-Update GitHub token to classic token.
+Rename docker image.
