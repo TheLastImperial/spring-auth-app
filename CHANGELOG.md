@@ -1,7 +1,7 @@
 # Auth App
 
-Version 0.0.7
+Version 0.0.8
 
 ## Comments
 
-Update permissions on GitHub Actions to create Docker image xD.
+Update GitHub token to classic token.
