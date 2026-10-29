@@ -1,7 +1,7 @@
 # Auth App
 
-Version 0.0.5
+Version 0.0.6
 
 ## Comments
 
-Updated build args on GitHub Action to build docker image.
+Updated Dockerfile.
