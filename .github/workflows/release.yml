@@ -73,7 +73,7 @@ jobs:
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
-        password: ${{ secrets.CR_PAT }}
+        password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v7
@@ -84,4 +84,4 @@ jobs:
         build-args: |
               APP_NAME=${{ env.AUTHAPP_ARTEFACT }}
               VERSION=${{ env.VERSION }}
-        tags: thelastimperial/spring-auth-app:${{ env.VERSION }}
+        tags: ghcr.io/thelastimperial/authapp:${{ env.VERSION }}
