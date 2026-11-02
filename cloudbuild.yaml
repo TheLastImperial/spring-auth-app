@@ -1,3 +1,18 @@
 
+steps:
+  - name: 'maven:3.9.6-eclipse-temurin-21'
+    entrypoint: 'mvn'
+    args: ['clean', 'package', '-DskipTests']
+    id: 'build-jar'
+
+artifacts:
+  objects:
+    location: 'gs://${_BUCKET_NAME}/builds/$BUILD_ID'
+    paths:
+      - 'target/authapp-0.0.11.jar'
+
+substitutions:
+  _BUCKET_NAME: 'authapp_bucket'
+
 options:
   logging: CLOUD_LOGGING_ONLY
