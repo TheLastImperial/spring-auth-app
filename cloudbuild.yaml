@@ -1,5 +1,29 @@
 
+availableSecrets:
+  secretManager:
+    - versionName: projects/838869213505/secrets/GITHUB_MAVEN_USER
+      env: 'GITHUB_MAVEN_USER'
+    - versionName: projects/838869213505/secrets/GITHUB_MAVEN_PASSWORD
+      env: 'GITHUB_MAVEN_PASSWORD'
+
 steps:
+  - name: 'Create settings.xml'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        cat > settings.xml <<EOF
+        <settings>
+          <servers>
+            <server>
+              <id>github</id>
+              <username>${GITHUB_MAVEN_USER}</username>
+              <password>${GITHUB_MAVEN_PASSWORD}</password>
+            </server>
+          </servers>
+        </settings>
+        EOF
+
   - name: 'maven:3.9.6-eclipse-temurin-21'
     entrypoint: 'mvn'
     args: ['clean', 'package', '-DskipTests']
